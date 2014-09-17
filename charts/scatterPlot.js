@@ -39,7 +39,7 @@
 		// Retrieving dimensions from model
 		var x = points.dimensions().get('x'),
 			y = points.dimensions().get('y');
-			
+
 		var g = selection
 			.attr("width", +width() )
 			.attr("height", +height() )
@@ -101,7 +101,9 @@
             .style("fill", function(d) { return colors() ? colors()(d.color) : "#eeeeee"; })
             .style("fill-opacity", .9)
     	    .attr("transform", function(d) { return "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"; })
-    	    .attr("r", function (d){ return Math.sqrt(sizeScale(d.size)/Math.PI); });
+    	    .attr("r", function (d){ return Math.sqrt(sizeScale(d.size)/Math.PI); })
+					.append("title")
+					.text(function (d){ return d.label? d.label.join(", ") : ""; });
 
     	point.append("circle")
             .filter(function(){ return showPoints(); })
