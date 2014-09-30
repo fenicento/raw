@@ -26,7 +26,7 @@
 	var colors = chart.color()
         .title("Color scale")
 
-	var showLabels = chart.checkbox()   
+	var showLabels = chart.checkbox()
         .title("Show labels")
 		.defaultValue(true)
 
@@ -46,7 +46,7 @@
 
 		var pack = d3.layout.pack()
 		    .padding(+padding())
-		    .sort(function (a,b){ return sort() ? a.value-b.value : null; })
+		    .sort(function (a,b){ return sort() ? b.size-a.size : b.value-a.value; })
 		    .size([innerDiameter, innerDiameter])
 		    .value(function(d) { return +d.size; })
 
@@ -71,6 +71,9 @@
             .style("fill-opacity", function (d){ return !d.children ? 1 : 0; })
             .style("stroke", '#ddd')
             .style("stroke-opacity", function (d) { return !d.children ? 0 : 1 })
+						.append("title")
+						.text(function (d) { return d.label ? d.label.join(", ") : d.name; });
+
 
         g.append("g").selectAll("text")
             .data(nodes.filter(function (d){ return showLabels(); }))
